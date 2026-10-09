@@ -572,7 +572,7 @@ footer .wrap{display:grid;gap:28px}
         <h1>Well-kept tables, <em>good company</em>, your next frame.</h1>
         <p class="lede">Ranu Billiards is a clean, friendly club for snooker and pool. Drop in for a casual game or reserve a table for you and your friends.</p>
         <div class="cta">
-          <a class="btn btn-primary" href="#billiards-contact">Reserve a table</a>
+          <a class="btn btn-primary" data-snookers href="#billiards">Book a table online &rarr;</a>
           <a class="btn btn-ghost" href="#billiards-rates">See rates</a>
         </div>
       </div>
@@ -623,6 +623,8 @@ footer .wrap{display:grid;gap:28px}
           <div><dt>Instagram</dt><dd>[@YOUR_HANDLE]</dd></div>
           <div><dt>Address</dt><dd>[CLUB ADDRESS]</dd></div>
         </dl>
+        <p style="margin-top:28px"><a class="btn btn-primary" data-snookers href="#billiards">Book online now &rarr;</a></p>
+        <p class="note" style="margin-top:10px">Live table availability and instant booking on the Ranu Snookers app.</p>
       </div>
       <form class="enq" data-form novalidate>
         <div class="row2">
@@ -661,6 +663,10 @@ footer .wrap{display:grid;gap:28px}
 
 <script>
 (function () {
+  // Address of the Ranu Snookers booking app (the Vercel site). Change it here, once.
+  var SNOOKERS_URL = 'https://snookers.ranugroupindia.com';
+  document.querySelectorAll('a[data-snookers]').forEach(function (a) { a.href = SNOOKERS_URL; });
+
   var views = Array.prototype.slice.call(document.querySelectorAll('[data-view]'));
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('nav.links a'));
   var sub = document.getElementById('brand-sub');
