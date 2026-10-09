@@ -1,0 +1,710 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Ranu Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one site, five pages (group home + four divisions) switched by #hash; shared header/footer; each division page = hero, offer grid, details band, contact */
+:root{
+  --bg:#FFFFFF; --surface:#F4F5F7; --ink:#16181D; --muted:#5A606B; --line:#E3E5EA;
+  --red:#B5121B; --red-ink:#FFFFFF; --steel:#8A9099; --band:#16181D; --band-ink:#F4F5F7; --band-muted:#A9AFB8; --band-accent:#F0656B;
+  --display:'Sora','Segoe UI',system-ui,sans-serif;
+  --body:'Manrope','Segoe UI',system-ui,sans-serif;
+  --wrap:1180px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111317; --surface:#1A1D23; --ink:#ECEEF1; --muted:#A3A9B3; --line:#2A2E36;
+  --red:#D8343C; --steel:#7C838E; --band:#0B0C0F; --band-ink:#ECEEF1; --band-muted:#A3A9B3; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111317; --surface:#1A1D23; --ink:#ECEEF1; --muted:#A3A9B3; --line:#2A2E36;
+  --red:#D8343C; --steel:#7C838E; --band:#0B0C0F; --band-ink:#ECEEF1; --band-muted:#A3A9B3; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+p{margin:0}
+.eyebrow{font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:10px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:var(--body)}
+.btn-primary{background:var(--red);color:var(--red-ink)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--ink)}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;min-height:72px;flex-wrap:wrap;padding-block:10px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand .word{font-family:var(--display);font-weight:700;letter-spacing:.2em;font-size:22px}
+.brand .div{width:2px;height:24px;background:var(--line)}
+.brand .sub{font-weight:500;color:var(--muted);font-size:17px}
+nav.links{display:flex;gap:6px;flex-wrap:wrap}
+nav.links a{text-decoration:none;font-weight:600;font-size:15px;color:var(--muted);padding:8px 12px;border-radius:8px;min-height:40px;display:inline-flex;align-items:center}
+nav.links a:hover{color:var(--ink);background:var(--surface)}
+nav.links a[aria-current="page"]{color:var(--ink);background:var(--surface)}
+
+/* hero */
+.hero{padding-block:72px 64px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
+.hero.solo .wrap{grid-template-columns:minmax(0,1fr);max-width:900px;margin-inline:auto}
+.hero h1{font-size:clamp(36px,5.2vw,62px);font-weight:800;letter-spacing:-.02em;margin-top:14px}
+.hero h1 em{font-style:normal;color:var(--red)}
+.hero .lede{color:var(--muted);font-size:19px;max-width:34em;margin-top:20px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.tagline{margin-top:28px;font-weight:600;color:var(--steel)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px}
+.panel h2{font-size:18px;font-weight:700}
+.panel .sub{font-size:13px;color:var(--muted)}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.panel-foot{margin-top:20px;font-size:13px;color:var(--muted)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.hero{padding-block:48px}}
+
+.stages{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px}
+.stages li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;align-items:center;font-size:15px}
+.stages .lbl{font-weight:600}
+.bar{height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--red);border-radius:6px}
+.bar i.part{background:var(--steel)}
+
+.facts{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:0}
+.facts li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.facts li:last-child{border-bottom:none}
+.facts span:first-child{color:var(--muted)}
+.facts span:last-child{font-weight:700;text-align:right}
+
+/* sections */
+section.blk{padding-block:80px;border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:12px;max-width:40em;margin-bottom:44px}
+.sec-head h2{font-size:clamp(28px,3.6vw,42px);font-weight:700;letter-spacing:-.01em}
+.sec-head p{color:var(--muted)}
+
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{border:1px solid var(--line);border-radius:14px;padding:26px;display:grid;gap:12px;align-content:start}
+.card svg{width:36px;height:36px;color:var(--red)}
+.card h3{font-size:20px;font-weight:700}
+.card p{color:var(--muted);font-size:16px}
+@media (max-width:900px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.grid3,.grid2{grid-template-columns:minmax(0,1fr)}}
+
+/* group home division cards */
+.divs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.div-card{display:grid;gap:16px;align-content:start;border:1px solid var(--line);border-radius:16px;padding:28px;text-decoration:none;background:var(--bg);transition:border-color .2s, transform .2s}
+.div-card:hover{border-color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){.div-card:hover{transform:translateY(-2px)}}
+.div-card .lock{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.div-card .lock b{font-family:var(--display);letter-spacing:.18em;font-size:18px}
+.div-card .lock i{width:2px;height:20px;background:var(--line)}
+.div-card .lock span{color:var(--muted);font-weight:500;font-size:18px}
+.div-card p{color:var(--muted)}
+.div-card .go{font-weight:700;color:var(--red);font-size:15px}
+@media (max-width:700px){.divs{grid-template-columns:minmax(0,1fr)}}
+
+.process{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.process li{padding:0 20px 0 0;display:grid;gap:10px;align-content:start;position:relative}
+.process .n{font-family:var(--display);font-weight:800;font-size:15px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg)}
+.process li:not(:last-child)::after{content:"";position:absolute;top:20px;left:48px;right:8px;height:2px;background:var(--line)}
+.process h3{font-size:18px;font-weight:700}
+.process p{color:var(--muted);font-size:15px}
+@media (max-width:900px){.process{grid-template-columns:minmax(0,1fr);gap:28px}.process li{grid-template-columns:40px minmax(0,1fr);column-gap:16px;padding:0}.process li > :not(.n){grid-column:2}.process .n{grid-row:span 2}.process li::after{display:none}}
+
+.band{background:var(--band);color:var(--band-ink);border-top:none}
+.band .sec-head p{color:var(--band-muted)}
+.band .eyebrow{color:var(--band-accent)}
+.commit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 48px}
+.commit div{display:grid;gap:8px;border-top:2px solid var(--red);padding-top:18px}
+.commit h3{font-size:20px;font-weight:700}
+.commit p{color:var(--band-muted);font-size:16px}
+@media (max-width:700px){.commit{grid-template-columns:minmax(0,1fr)}}
+
+.ph{aspect-ratio:4/3;max-width:100%;border-radius:12px;background:var(--surface);border:1px dashed var(--steel);display:grid;place-items:center;color:var(--muted);font-size:14px;font-weight:600;text-align:center;padding:12px}
+.item{display:grid;gap:10px}
+.item h3{font-size:18px;font-weight:700}
+.item p{color:var(--muted);font-size:15px}
+.price{font-family:var(--display);font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}
+.chips li{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:600;font-size:15px}
+
+.rates{width:100%;border-collapse:collapse;font-size:16px;font-variant-numeric:tabular-nums}
+.rates th,.rates td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line)}
+.rates th{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.rates td:last-child,.rates th:last-child{text-align:right}
+.tbl{overflow-x:auto}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:start}
+.details{display:grid;gap:20px;margin:0}
+.details dt{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.details dd{margin:4px 0 0;font-size:18px;font-weight:600;user-select:all}
+form.enq{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;display:grid;gap:16px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+label{display:grid;gap:6px;font-size:14px;font-weight:600}
+input,select,textarea{font:inherit;font-size:16px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-height:48px;width:100%}
+textarea{min-height:110px;resize:vertical}
+.note{font-size:14px;color:var(--muted)}
+.ok{font-size:15px;font-weight:600;background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:8px;padding:12px 14px}
+@media (max-width:860px){.contact{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.row2{grid-template-columns:minmax(0,1fr)}}
+
+footer{background:var(--band);color:var(--band-muted);padding-block:48px;font-size:15px}
+footer .wrap{display:grid;gap:28px}
+.fgroup{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+.fgroup b{color:var(--band-ink);font-family:var(--display);letter-spacing:.18em}
+.fgroup a{color:var(--band-ink);text-decoration:none}
+.fgroup a:hover{text-decoration:underline}
+.fine{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #2A2E36;padding-top:20px}
+@media (prefers-reduced-motion:no-preference){.bar i{animation:grow 1.2s ease-out both}@keyframes grow{from{transform:scaleX(.2);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="rclip"><rect x="0" y="26" width="120" height="68"/></clipPath>
+    <symbol id="rmark" viewBox="0 0 120 120"><rect width="120" height="120" rx="28" fill="#B5121B"/><g clip-path="url(#rclip)" fill="none" stroke="#fff" stroke-width="14"><rect x="34" y="26" width="14" height="68" fill="#fff" stroke="none"/><path d="M34 33 H66 a16 16 0 0 1 0 32 H34"/><path d="M60 62 L86 98"/></g></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Ranu Group home">
+      <svg width="40" height="40" aria-hidden="true"><use href="#rmark"/></svg>
+      <span class="word">RANU</span><span class="div" id="brand-div" hidden></span><span class="sub" id="brand-sub" hidden></span>
+    </a>
+    <nav class="links" aria-label="Divisions">
+      <a href="#construction">Construction</a>
+      <a href="#interiors">Interiors</a>
+      <a href="#homestay">Homestay</a>
+      <a href="#billiards">Billiards</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ===================== GROUP HOME ===================== -->
+<div data-view="home">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Ranu Group</div>
+        <h1>One name you can trust, <em>across every business</em> we run.</h1>
+        <p class="lede">Ranu is a family of businesses in construction, interiors, hospitality and leisure. Each division runs with the same promise: honest work, fair pricing and people who answer your call.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#home-divisions">Explore our businesses</a>
+          <a class="btn btn-ghost" href="#home-contact">Contact the group</a>
+        </div>
+      </div>
+      <aside class="panel" aria-label="Ranu divisions at a glance">
+        <div class="panel-head"><h2>Our divisions</h2><span class="sub">Tap one to visit</span></div>
+        <ul class="facts">
+          <li><span>Real Estate &amp; Development</span><span><a href="#construction">Ranu Construction</a></span></li>
+          <li><span>Design and fit out your space</span><span><a href="#interiors">Ranu Interiors</a></span></li>
+          <li><span>Stay with us</span><span><a href="#homestay">Ranu Homestay</a></span></li>
+          <li><span>Play snooker and pool</span><span><a href="#billiards">Ranu Billiards</a></span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="blk" id="home-divisions">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Our businesses</div>
+        <h2>Four divisions, one standard</h2>
+      </div>
+      <div class="divs">
+        <a class="div-card" href="#construction">
+          <span class="lock"><svg width="44" height="44" aria-hidden="true"><use href="#rmark"/></svg><b>RANU</b><i></i><span>Construction</span></span>
+          <p><strong style="color:var(--ink)">Real Estate &amp; Development</strong><br>Land Development • Building Development • Joint Ventures</p>
+          <span class="go">Visit Ranu Construction →</span>
+        </a>
+        <a class="div-card" href="#interiors">
+          <span class="lock"><svg width="44" height="44" aria-hidden="true"><use href="#rmark"/></svg><b>RANU</b><i></i><span>Interiors</span></span>
+          <p>Modular kitchens, wardrobes and complete home and office interiors.</p>
+          <span class="go">Visit Ranu Interiors →</span>
+        </a>
+        <a class="div-card" href="#homestay">
+          <span class="lock"><svg width="44" height="44" aria-hidden="true"><use href="#rmark"/></svg><b>RANU</b><i></i><span>Homestay</span></span>
+          <p>Comfortable, homely rooms for families, couples and travellers.</p>
+          <span class="go">Visit Ranu Homestay →</span>
+        </a>
+        <a class="div-card" href="#billiards">
+          <span class="lock"><svg width="44" height="44" aria-hidden="true"><use href="#rmark"/></svg><b>RANU</b><i></i><span>Billiards</span></span>
+          <p>Snooker and pool tables in a clean, friendly club setting.</p>
+          <span class="go">Visit Ranu Billiards →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk band">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">The Ranu promise</div>
+        <h2>What every Ranu business stands for</h2>
+      </div>
+      <div class="commit">
+        <div><h3>Honest pricing</h3><p>Clear rates and estimates before you commit, with no hidden charges.</p></div>
+        <div><h3>Quality you can see</h3><p>Good materials, clean spaces and work we are proud to put our name on.</p></div>
+        <div><h3>People who respond</h3><p>A real person answers your call or message, in every division.</p></div>
+        <div><h3>Local and accountable</h3><p>We live and work here, and our reputation goes with every job.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="home-contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Contact</div>
+        <h2>Reach the Ranu Group</h2>
+        <p>For a specific business, contact that division directly from its page.</p>
+      </div>
+      <dl class="details grid2">
+        <div><dt>Group office</dt><dd>[GROUP OFFICE ADDRESS]</dd></div>
+        <div><dt>Phone</dt><dd>[GROUP PHONE NUMBER]</dd></div>
+        <div><dt>Email</dt><dd>[GROUP EMAIL]</dd></div>
+        <div><dt>Hours</dt><dd>[e.g. Mon–Sat, 10 am – 7 pm]</dd></div>
+      </dl>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CONSTRUCTION ===================== -->
+<div data-view="construction" data-sub="Construction" hidden>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Real Estate &amp; Development</div>
+        <h1>Homes and buildings, built <em>right</em> from the foundation up.</h1>
+        <p class="tagline" style="margin-top:14px;color:var(--ink)">Land Development • Building Development • Joint Ventures</p>
+        <p class="lede">Ranu Construction plans, builds and hands over residential and commercial projects, with one accountable team from the first site visit to the day you get the keys.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#construction-contact">Request a site visit</a>
+          <a class="btn btn-ghost" href="#construction-realestate">See our services</a>
+        </div>
+        <p class="tagline">Engineering your dreams with us</p>
+      </div>
+      <aside class="panel" aria-label="Example project progress board">
+        <div class="panel-head"><h2>Site progress, every week</h2><span class="sub">Example: G+2 residence</span></div>
+        <ul class="stages">
+          <li><span class="lbl">Foundation</span><span class="bar"><i style="width:100%"></i></span></li>
+          <li><span class="lbl">Plinth</span><span class="bar"><i style="width:100%"></i></span></li>
+          <li><span class="lbl">RCC frame</span><span class="bar"><i style="width:100%"></i></span></li>
+          <li><span class="lbl">Brickwork</span><span class="bar"><i class="part" style="width:65%"></i></span></li>
+          <li><span class="lbl">Plaster</span><span class="bar"><i class="part" style="width:20%"></i></span></li>
+          <li><span class="lbl">Finishing</span><span class="bar"><i style="width:0%"></i></span></li>
+        </ul>
+        <p class="panel-foot">Clients get a stage-wise update with site photos, so you always know where your project stands.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="blk" id="construction-realestate">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Real Estate &amp; Development</div><h2>Land Development • Building Development • Joint Ventures</h2></div>
+      <div class="grid3">
+        <article class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M4 20l4-9 4 5 3-4 5 8"/><path d="M4 6h4M6 4v4"/></svg><h3>Land Development</h3><p>Turning raw land into ready plots, with layout planning, levelling, roads and utilities.</p></article>
+        <article class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="10" height="18"/><path d="M14 9h6v12h-6"/><path d="M7 7h4M7 11h4M7 15h4"/></svg><h3>Building Development</h3><p>Residential and commercial buildings developed from design and approvals to handover.</p></article>
+        <article class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg><h3>Joint Ventures</h3><p>Partnerships with landowners to develop their land, with clear and fair terms for both sides.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="construction-services">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Construction services</div><h2>One team for the whole build</h2><p>Choose a complete turnkey project or only the stages you need.</p></div>
+      <div class="grid3">
+        <article class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><h3>Residential construction</h3><p>Independent houses, villas and duplexes, built to your approved plan and budget.</p></article>
+        <article class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="10" height="18"/><path d="M14 9h6v12h-6"/><path d="M7 7h4M7 11h4M7 15h4"/></svg><h3>Commercial buildings</h3><p>Shops, offices and mixed-use buildings with structural design and site execution.</p></article>
+        <article class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-7h6v7"/></svg><h3>Turnkey projects</h3><p>Design, approvals, construction and finishing handled end to end under one contract.</p></article>
+        <article class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg><h3>Renovation &amp; extensions</h3><p>Additional floors, structural repairs and full renovations of existing buildings.</p></article>
+        <article class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 10v10"/></svg><h3>Planning &amp; estimates</h3><p>Floor plans, Vastu-friendly layouts and a detailed bill of quantities before work starts.</p></article>
+        <a class="card" href="#interiors" style="text-decoration:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 10v10"/></svg><h3>Interiors →</h3><p>Kitchens, wardrobes and full interiors through our sister division, Ranu Interiors.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">How we build</div><h2>Five clear steps from plot to possession</h2></div>
+      <ol class="process">
+        <li><span class="n">1</span><h3>Site visit</h3><p>We inspect the plot, soil and access, and listen to what you need.</p></li>
+        <li><span class="n">2</span><h3>Design &amp; estimate</h3><p>Plans, elevations and an itemised cost estimate you can review line by line.</p></li>
+        <li><span class="n">3</span><h3>Approvals</h3><p>We prepare drawings and support you through the local plan sanction.</p></li>
+        <li><span class="n">4</span><h3>Construction</h3><p>Stage-wise execution with quality checks and regular progress updates.</p></li>
+        <li><span class="n">5</span><h3>Handover</h3><p>Final walkthrough, snag fixing and handover of keys and documents.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="blk band">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Why Ranu</div><h2>What you can expect from us</h2></div>
+      <div class="commit">
+        <div><h3>Transparent pricing</h3><p>An itemised estimate up front, and no surprise charges added mid-project.</p></div>
+        <div><h3>Quality materials</h3><p>Branded cement, steel and fittings, with the specification written into your agreement.</p></div>
+        <div><h3>On-time handover</h3><p>A stage-wise schedule agreed at the start, tracked and shared with you every week.</p></div>
+        <div><h3>One point of contact</h3><p>A dedicated site engineer who answers your calls and owns your project.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Our work</div><h2>Recent projects</h2></div>
+      <div class="grid3">
+        <article class="item"><div class="ph">[Project photo]</div><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+        <article class="item"><div class="ph">[Project photo]</div><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+        <article class="item"><div class="ph">[Project photo]</div><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="construction-contact">
+    <div class="wrap contact">
+      <div>
+        <div class="sec-head" style="margin-bottom:28px"><div class="eyebrow">Get in touch</div><h2>Tell us about your plot</h2><p>Share a few details and we will call you back to plan a site visit.</p></div>
+        <dl class="details">
+          <div><dt>Phone / WhatsApp</dt><dd>[CONSTRUCTION PHONE]</dd></div>
+          <div><dt>Email</dt><dd>[CONSTRUCTION EMAIL]</dd></div>
+          <div><dt>Office</dt><dd>[OFFICE ADDRESS]</dd></div>
+        </dl>
+      </div>
+      <form class="enq" data-form novalidate>
+        <div class="row2">
+          <label for="c-name">Your name<input id="c-name" name="name" required autocomplete="name"></label>
+          <label for="c-phone">Phone number<input id="c-phone" name="phone" type="tel" required autocomplete="tel"></label>
+        </div>
+        <div class="row2">
+          <label for="c-type">Project type<select id="c-type" name="type"><option>Land development</option><option>Building development</option><option>Joint venture (I own land)</option><option>New house</option><option>Commercial building</option><option>Turnkey project</option><option>Renovation / extension</option></select></label>
+          <label for="c-plot">Plot size (sq ft)<input id="c-plot" name="plot" inputmode="numeric" placeholder="e.g. 1,200"></label>
+        </div>
+        <label for="c-msg">About your project<textarea id="c-msg" name="msg" placeholder="Location, number of floors, timeline…"></textarea></label>
+        <button class="btn btn-primary" type="submit">Request a call back</button>
+        <p class="note">This preview form is not connected yet. Once the site is live, enquiries can go to your email or WhatsApp.</p>
+        <p class="ok" hidden></p>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== INTERIORS ===================== -->
+<div data-view="interiors" data-sub="Interiors" hidden>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Home &amp; office interiors</div>
+        <h1>Spaces designed around <em>how you live</em> and work.</h1>
+        <p class="lede">Ranu Interiors designs and builds modular kitchens, wardrobes and complete interiors, with a 3D design you approve before any work begins.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#interiors-contact">Book a free consultation</a>
+          <a class="btn btn-ghost" href="#interiors-services">What we design</a>
+        </div>
+      </div>
+      <aside class="panel" aria-label="Typical interior project">
+        <div class="panel-head"><h2>A typical 2BHK project</h2><span class="sub">Example scope</span></div>
+        <ul class="facts">
+          <li><span>Design &amp; 3D views</span><span>Week 1–2</span></li>
+          <li><span>Material selection</span><span>Week 2</span></li>
+          <li><span>Factory production</span><span>Week 3–5</span></li>
+          <li><span>Site installation</span><span>Week 6–7</span></li>
+          <li><span>Final handover</span><span>Week 8</span></li>
+        </ul>
+        <p class="panel-foot">Timelines vary with scope. We confirm yours in writing after the design is final.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="blk" id="interiors-services">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">What we design</div><h2>Interiors for every room</h2></div>
+      <div class="grid3">
+        <article class="card"><h3>Modular kitchens</h3><p>Straight, L-shaped, U-shaped and island kitchens with durable, easy-clean finishes.</p></article>
+        <article class="card"><h3>Wardrobes &amp; storage</h3><p>Sliding and hinged wardrobes, lofts and TV units planned around your space.</p></article>
+        <article class="card"><h3>Living &amp; bedrooms</h3><p>False ceilings, lighting, wall panelling and furniture that works together.</p></article>
+        <article class="card"><h3>Full home interiors</h3><p>One design and one team for the whole home, from layout to final cleaning.</p></article>
+        <article class="card"><h3>Offices &amp; shops</h3><p>Workstations, cabins, reception areas and retail fit-outs.</p></article>
+        <a class="card" href="#construction" style="text-decoration:none"><h3>Building new? →</h3><p>Plan your interiors with Ranu Construction from day one, so wiring and plumbing are ready.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk band">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Our process</div><h2>From idea to keys in four steps</h2></div>
+      <div class="commit">
+        <div><h3>1. Consultation</h3><p>We visit, measure your space and understand your style and budget.</p></div>
+        <div><h3>2. 3D design</h3><p>You see your rooms in 3D and approve every detail and finish.</p></div>
+        <div><h3>3. Production</h3><p>Modules are made to measure with quality hardware and finishes.</p></div>
+        <div><h3>4. Installation</h3><p>Our team installs, cleans up and hands over a ready-to-use space.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Our work</div><h2>Recent interiors</h2></div>
+      <div class="grid3">
+        <article class="item"><div class="ph">[Kitchen photo]</div><h3>[Project name]</h3><p>[Scope] · [Location]</p></article>
+        <article class="item"><div class="ph">[Bedroom photo]</div><h3>[Project name]</h3><p>[Scope] · [Location]</p></article>
+        <article class="item"><div class="ph">[Living room photo]</div><h3>[Project name]</h3><p>[Scope] · [Location]</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="interiors-contact">
+    <div class="wrap contact">
+      <div>
+        <div class="sec-head" style="margin-bottom:28px"><div class="eyebrow">Get in touch</div><h2>Plan your interiors</h2><p>Tell us about your space and we will arrange a consultation.</p></div>
+        <dl class="details">
+          <div><dt>Phone / WhatsApp</dt><dd>[INTERIORS PHONE]</dd></div>
+          <div><dt>Email</dt><dd>[INTERIORS EMAIL]</dd></div>
+          <div><dt>Studio</dt><dd>[STUDIO ADDRESS]</dd></div>
+        </dl>
+      </div>
+      <form class="enq" data-form novalidate>
+        <div class="row2">
+          <label for="i-name">Your name<input id="i-name" name="name" required autocomplete="name"></label>
+          <label for="i-phone">Phone number<input id="i-phone" name="phone" type="tel" required autocomplete="tel"></label>
+        </div>
+        <div class="row2">
+          <label for="i-type">Property<select id="i-type" name="type"><option>1BHK</option><option>2BHK</option><option>3BHK</option><option>Villa / independent house</option><option>Office / shop</option></select></label>
+          <label for="i-scope">Scope<select id="i-scope" name="scope"><option>Full interiors</option><option>Kitchen only</option><option>Wardrobes only</option><option>Not sure yet</option></select></label>
+        </div>
+        <label for="i-msg">Anything else<textarea id="i-msg" name="msg" placeholder="Location, possession date, style you like…"></textarea></label>
+        <button class="btn btn-primary" type="submit">Request a consultation</button>
+        <p class="note">This preview form is not connected yet.</p>
+        <p class="ok" hidden></p>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== HOMESTAY ===================== -->
+<div data-view="homestay" data-sub="Homestay" hidden>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Stay with us</div>
+        <h1>A clean, comfortable stay that <em>feels like home</em>.</h1>
+        <p class="lede">Ranu Homestay offers well-kept rooms and warm hosting for families, couples and travellers. Book directly with us or through your favourite travel app.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#homestay-contact">Check availability</a>
+          <a class="btn btn-ghost" href="#homestay-rooms">View rooms</a>
+        </div>
+      </div>
+      <aside class="panel" aria-label="Stay details">
+        <div class="panel-head"><h2>Good to know</h2></div>
+        <ul class="facts">
+          <li><span>Check-in</span><span>[e.g. 12:00 pm]</span></li>
+          <li><span>Check-out</span><span>[e.g. 11:00 am]</span></li>
+          <li><span>Location</span><span>[AREA, CITY]</span></li>
+          <li><span>Nearby</span><span>[Landmark / station]</span></li>
+          <li><span>ID required</span><span>Govt. photo ID</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="blk" id="homestay-rooms">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Rooms</div><h2>Choose your room</h2><p>Rates are per night. Contact us for long stays and group bookings.</p></div>
+      <div class="grid3">
+        <article class="item"><div class="ph">[Room photo]</div><h3>[Room type, e.g. Deluxe Double]</h3><p>[Sleeps 2] · [AC] · [Attached bath]</p><p class="price">₹[RATE] / night</p></article>
+        <article class="item"><div class="ph">[Room photo]</div><h3>[Room type, e.g. Family Room]</h3><p>[Sleeps 4] · [AC] · [Attached bath]</p><p class="price">₹[RATE] / night</p></article>
+        <article class="item"><div class="ph">[Room photo]</div><h3>[Room type]</h3><p>[Details]</p><p class="price">₹[RATE] / night</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Amenities</div><h2>What your stay includes</h2><p>Edit this list to match your property.</p></div>
+      <ul class="chips">
+        <li>[Wi-Fi]</li><li>[Parking]</li><li>[Hot water]</li><li>[Home-cooked meals]</li><li>[Power backup]</li><li>[Housekeeping]</li><li>[Garden / terrace]</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="blk band">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Book your stay</div><h2>Book the way you prefer</h2><p>Message us directly for the best rate, or find us on these apps.</p></div>
+      <div class="commit">
+        <div><h3>Direct on WhatsApp</h3><p>[HOMESTAY WHATSAPP NUMBER]</p></div>
+        <div><h3>Travel apps</h3><p>[Add your Airbnb, Booking.com or MakeMyTrip links here]</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="homestay-contact">
+    <div class="wrap contact">
+      <div>
+        <div class="sec-head" style="margin-bottom:28px"><div class="eyebrow">Availability</div><h2>Ask about your dates</h2><p>Tell us when you are coming and we will confirm the room and rate.</p></div>
+        <dl class="details">
+          <div><dt>Phone / WhatsApp</dt><dd>[HOMESTAY PHONE]</dd></div>
+          <div><dt>Address</dt><dd>[HOMESTAY ADDRESS]</dd></div>
+        </dl>
+      </div>
+      <form class="enq" data-form novalidate>
+        <div class="row2">
+          <label for="h-name">Your name<input id="h-name" name="name" required autocomplete="name"></label>
+          <label for="h-phone">Phone number<input id="h-phone" name="phone" type="tel" required autocomplete="tel"></label>
+        </div>
+        <div class="row2">
+          <label for="h-in">Check-in date<input id="h-in" name="checkin" type="date"></label>
+          <label for="h-out">Check-out date<input id="h-out" name="checkout" type="date"></label>
+        </div>
+        <label for="h-guests">Number of guests<select id="h-guests" name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option></select></label>
+        <button class="btn btn-primary" type="submit">Check availability</button>
+        <p class="note">This preview form is not connected yet.</p>
+        <p class="ok" hidden></p>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== BILLIARDS ===================== -->
+<div data-view="billiards" data-sub="Billiards" hidden>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Snooker &amp; pool</div>
+        <h1>Well-kept tables, <em>good company</em>, your next frame.</h1>
+        <p class="lede">Ranu Billiards is a clean, friendly club for snooker and pool. Drop in for a casual game or reserve a table for you and your friends.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#billiards-contact">Reserve a table</a>
+          <a class="btn btn-ghost" href="#billiards-rates">See rates</a>
+        </div>
+      </div>
+      <aside class="panel" aria-label="Opening hours">
+        <div class="panel-head"><h2>Opening hours</h2></div>
+        <ul class="facts">
+          <li><span>Monday – Friday</span><span>[e.g. 11 am – 11 pm]</span></li>
+          <li><span>Saturday – Sunday</span><span>[e.g. 10 am – 12 am]</span></li>
+          <li><span>Location</span><span>[AREA, CITY]</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="blk" id="billiards-rates">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Tables &amp; rates</div><h2>Play by the hour</h2></div>
+      <div class="tbl">
+        <table class="rates">
+          <thead><tr><th>Table</th><th>Number of tables</th><th>Rate per hour</th></tr></thead>
+          <tbody>
+            <tr><td>Snooker</td><td>[No.]</td><td>₹[RATE]</td></tr>
+            <tr><td>Pool (8-ball)</td><td>[No.]</td><td>₹[RATE]</td></tr>
+            <tr><td>[Other table]</td><td>[No.]</td><td>₹[RATE]</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">At the club</div><h2>More than just tables</h2></div>
+      <div class="grid3">
+        <article class="card"><h3>Coaching</h3><p>[Describe beginner sessions or coaching, if you offer them.]</p></article>
+        <article class="card"><h3>Tournaments</h3><p>[Describe club tournaments or leagues, if you run them.]</p></article>
+        <article class="card"><h3>Refreshments</h3><p>[Describe snacks and drinks available at the club.]</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="billiards-contact">
+    <div class="wrap contact">
+      <div>
+        <div class="sec-head" style="margin-bottom:28px"><div class="eyebrow">Reserve</div><h2>Book your table</h2><p>Reserve ahead on weekends and evenings, when tables fill up fastest.</p></div>
+        <dl class="details">
+          <div><dt>Phone / WhatsApp</dt><dd>[BILLIARDS PHONE]</dd></div>
+          <div><dt>Instagram</dt><dd>[@YOUR_HANDLE]</dd></div>
+          <div><dt>Address</dt><dd>[CLUB ADDRESS]</dd></div>
+        </dl>
+      </div>
+      <form class="enq" data-form novalidate>
+        <div class="row2">
+          <label for="b-name">Your name<input id="b-name" name="name" required autocomplete="name"></label>
+          <label for="b-phone">Phone number<input id="b-phone" name="phone" type="tel" required autocomplete="tel"></label>
+        </div>
+        <div class="row2">
+          <label for="b-date">Date<input id="b-date" name="date" type="date"></label>
+          <label for="b-time">Time<input id="b-time" name="time" type="time"></label>
+        </div>
+        <div class="row2">
+          <label for="b-table">Table<select id="b-table" name="table"><option>Snooker</option><option>Pool</option></select></label>
+          <label for="b-hours">Hours<select id="b-hours" name="hours"><option>1</option><option>2</option><option>3</option></select></label>
+        </div>
+        <button class="btn btn-primary" type="submit">Request reservation</button>
+        <p class="note">This preview form is not connected yet.</p>
+        <p class="ok" hidden></p>
+      </form>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgroup" aria-label="Ranu Group businesses">
+      <b>RANU</b>
+      <a href="#construction">Construction</a><a href="#interiors">Interiors</a><a href="#homestay">Homestay</a><a href="#billiards">Billiards</a>
+    </div>
+    <div class="fine">
+      <span>© 2026 Ranu Group</span>
+      <span>[GROUP PHONE] · [GROUP EMAIL]</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var views = Array.prototype.slice.call(document.querySelectorAll('[data-view]'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('nav.links a'));
+  var sub = document.getElementById('brand-sub');
+  var div = document.getElementById('brand-div');
+  var titles = { home: 'Ranu Group', construction: 'Ranu Construction', interiors: 'Ranu Interiors', homestay: 'Ranu Homestay', billiards: 'Ranu Billiards' };
+
+  function route() {
+    var hash = (location.hash || '').replace('#', '');
+    var name = hash.split('-')[0] || 'home';
+    if (!titles[name]) name = 'home';
+    var current = null;
+    views.forEach(function (v) {
+      var on = v.getAttribute('data-view') === name;
+      v.hidden = !on;
+      if (on) current = v;
+    });
+    var label = current.getAttribute('data-sub');
+    sub.textContent = label || '';
+    sub.hidden = !label; div.hidden = !label;
+    navLinks.forEach(function (a) {
+      if (a.getAttribute('href') === '#' + name) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+    document.title = titles[name];
+    var target = hash && hash !== name ? document.getElementById(hash) : null;
+    if (target) target.scrollIntoView();
+    else window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+  route();
+
+  document.querySelectorAll('form[data-form]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = (f.querySelector('[name="name"]').value || '').trim();
+      var phone = (f.querySelector('[name="phone"]').value || '').trim();
+      var ok = f.querySelector('.ok');
+      ok.textContent = (!name || !phone)
+        ? 'Please enter your name and phone number so we can reach you.'
+        : 'Thanks, ' + name + '. Your details look complete. This form is a preview and is not sending requests yet.';
+      ok.hidden = false;
+    });
+  });
+})();
+</script>
+
+</body></html>
