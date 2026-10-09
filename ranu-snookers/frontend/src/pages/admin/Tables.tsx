@@ -1,5 +1,6 @@
 /** Live board + table configuration (rates, QR codes) + pricing rules. */
 import { useState } from "react";
+import { withBase } from "@/lib/base";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { get, patch, post, put } from "@/services/api";
 import type { BoardRow, GameType, PricingRule, Table } from "@/types/api";
@@ -52,7 +53,7 @@ function TableConfig() {
     setForm(t ? { name: t.name, hourly_rate: t.hourly_rate, peak_rate: t.peak_rate ?? "", off_peak_rate: t.off_peak_rate ?? "", minimum_booking_duration: String(t.minimum_booking_duration), maximum_booking_duration: String(t.maximum_booking_duration), reason: "" }
       : { table_number: "", name: "", game_type_id: games.data?.[0]?.id ?? "", hourly_rate: "", minimum_booking_duration: "30", maximum_booking_duration: "240" });
   };
-  const qrUrl = (t: Table) => `${window.location.origin}/t/${t.qr_token}`;
+  const qrUrl = (t: Table) => `${window.location.origin}${withBase("/t/")}${t.qr_token}`;
   return (
     <Card>
       <CardTitle action={<Button size="sm" onClick={() => open(null)}>+ Add table</Button>}>Tables</CardTitle>

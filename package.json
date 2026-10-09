@@ -1,0 +1,7 @@
+{
+  "name": "ranu-group-site",
+  "private": true,
+  "description": "Ranu Group company site with the RANU Snookers app mounted at /snookers/",
+  "scripts": { "build": "node scripts/build-site.mjs" },
+  "engines": { "node": ">=20.19" }
+}

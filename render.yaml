@@ -21,8 +21,8 @@ services:
       - { key: RUN_EMBEDDED_WORKER, value: "true" }
       - { key: JWT_SECRET, generateValue: true }
       - { key: DATABASE_URL, sync: false }     # paste from Neon / Render Postgres
-      - { key: CORS_ORIGINS, sync: false }     # https://<your-site>.vercel.app (and your custom domain)
-      - { key: PUBLIC_BASE_URL, sync: false }  # https://<your-site>.vercel.app
+      - { key: CORS_ORIGINS, sync: false }     # https://ranugroupindia.com
+      - { key: PUBLIC_BASE_URL, sync: false }  # https://ranugroupindia.com/snookers
       # "mock" simulates payments (no real money). Switch to razorpay + keys before taking real deposits.
       - { key: PAYMENT_PROVIDER, value: mock }
       - { key: PAYMENT_KEY, sync: false }

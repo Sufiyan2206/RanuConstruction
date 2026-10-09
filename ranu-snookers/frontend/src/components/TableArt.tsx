@@ -1,6 +1,7 @@
 /** Table imagery: illustrated top-down tables per game, overridable with real photos. */
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { withBase } from "@/lib/base";
 
 /** Real photos, if you have them. Put the files in `public/tables/` and list them here.
  *  A per-table photo ("table-<number>") wins over a per-game photo (game code). Example:
@@ -15,12 +16,12 @@ type TableLike = { table_number?: number; game_type: { code: string } };
 
 export function tableImage(t: TableLike): string {
   const code = t.game_type.code.toUpperCase();
-  return PHOTOS[`table-${t.table_number}`] ?? PHOTOS[code] ?? `/tables/${ART[code] ?? "snooker"}.svg`;
+  return PHOTOS[`table-${t.table_number}`] ?? PHOTOS[code] ?? withBase(`/tables/${ART[code] ?? "snooker"}.svg`);
 }
 
 export function gameImage(code: string): string {
   const c = code.toUpperCase();
-  return PHOTOS[c] ?? `/tables/${ART[c] ?? "snooker"}.svg`;
+  return PHOTOS[c] ?? withBase(`/tables/${ART[c] ?? "snooker"}.svg`);
 }
 
 /** Image block with a bottom shade so text placed on it stays readable. */

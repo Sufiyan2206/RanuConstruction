@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "@/stores/auth";
 import { cn } from "@/lib/cn";
+import { withBase } from "@/lib/base";
 
 const NAV = [
   { to: "/#games", label: "Games" },
@@ -35,7 +36,7 @@ export function PublicLayout() {
           <Logo />
           <nav className="hidden items-center gap-7 text-sm font-medium text-ink-300 md:flex" aria-label="Main">
             {NAV.map((n) => (
-              <a key={n.to} href={n.to} className="relative py-1 transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-brass-500 after:transition-transform hover:text-ink-50 hover:after:scale-x-100">{n.label}</a>
+              <a key={n.to} href={withBase(n.to)} className="relative py-1 transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-brass-500 after:transition-transform hover:text-ink-50 hover:after:scale-x-100">{n.label}</a>
             ))}
           </nav>
           <div className="flex items-center gap-3">
@@ -49,7 +50,7 @@ export function PublicLayout() {
           </div>
         </div>
         <nav className={cn("border-t border-line bg-white px-4 py-2 md:hidden", !open && "hidden")} aria-label="Mobile">
-          {NAV.map((n) => <a key={n.to} href={n.to} onClick={() => setOpen(false)} className="block border-b border-line/60 py-3 text-ink-100 last:border-0">{n.label}</a>)}
+          {NAV.map((n) => <a key={n.to} href={withBase(n.to)} onClick={() => setOpen(false)} className="block border-b border-line/60 py-3 text-ink-100 last:border-0">{n.label}</a>)}
           <Link to={me ? (isStaff ? "/admin" : "/my/bookings") : "/login"} onClick={() => setOpen(false)} className="block py-3 font-medium text-brass-400">{me ? "My account" : "Login"}</Link>
         </nav>
       </header>
@@ -72,7 +73,7 @@ export function PublicLayout() {
             <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-brass-500">Play</div>
             <div className="flex flex-col gap-1.5">
               <Link to="/book" className="hover:text-white">Book a table</Link>
-              <a href="/#membership" className="hover:text-white">Membership</a>
+              <a href={withBase("/#membership")} className="hover:text-white">Membership</a>
               <Link to={me ? "/my/bookings" : "/login"} className="hover:text-white">{me ? "My bookings" : "Login"}</Link>
             </div>
           </div>

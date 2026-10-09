@@ -663,8 +663,8 @@ footer .wrap{display:grid;gap:28px}
 
 <script>
 (function () {
-  // Address of the Ranu Snookers booking app (the Vercel site). Change it here, once.
-  var SNOOKERS_URL = 'https://snookers.ranugroupindia.com';
+  // Address of the Ranu Snookers booking app (served from the same site under /snookers/). Change it here, once.
+  var SNOOKERS_URL = '/snookers/';
   document.querySelectorAll('a[data-snookers]').forEach(function (a) { a.href = SNOOKERS_URL; });
 
   var views = Array.prototype.slice.call(document.querySelectorAll('[data-view]'));

@@ -82,12 +82,15 @@ export function AppRoutes() {
   );
 }
 
+// "/snookers/" -> "/snookers"; "/" -> undefined (served from the domain root)
+const BASENAME = import.meta.env.BASE_URL.replace(/\/$/, "") || undefined;
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ToastProvider>
         <AuthProvider>
-          <BrowserRouter>
+          <BrowserRouter basename={BASENAME}>
             <AppRoutes />
           </BrowserRouter>
         </AuthProvider>
