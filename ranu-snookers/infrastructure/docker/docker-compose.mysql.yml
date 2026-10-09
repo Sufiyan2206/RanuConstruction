@@ -1,0 +1,23 @@
+# Optional override: run on MySQL 8 instead of PostgreSQL.
+#   docker compose -f docker-compose.yml -f infrastructure/docker/docker-compose.mysql.yml up -d
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ranu
+      MYSQL_USER: ranu
+      MYSQL_PASSWORD: ${POSTGRES_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${POSTGRES_PASSWORD}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci", "--transaction-isolation=READ-COMMITTED"]
+    volumes: [mysqldata:/var/lib/mysql]
+    healthcheck: { test: ["CMD", "mysqladmin", "ping", "-h", "localhost"], interval: 5s, retries: 30 }
+  api:
+    environment: { DATABASE_URL: "mysql+pymysql://ranu:${POSTGRES_PASSWORD}@mysql:3306/ranu?charset=utf8mb4" }
+    depends_on: { mysql: { condition: service_healthy } }
+  worker:
+    environment: { DATABASE_URL: "mysql+pymysql://ranu:${POSTGRES_PASSWORD}@mysql:3306/ranu?charset=utf8mb4" }
+  migrate:
+    environment: { DATABASE_URL: "mysql+pymysql://ranu:${POSTGRES_PASSWORD}@mysql:3306/ranu?charset=utf8mb4" }
+volumes:
+  mysqldata:

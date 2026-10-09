@@ -1,0 +1,16 @@
+# Runtime
+fastapi==0.115.14
+uvicorn[standard]==0.46.0
+SQLAlchemy==2.0.54
+alembic==1.20.0
+pydantic==2.13.3
+pydantic-settings==2.14.0
+email-validator==2.3.0
+psycopg[binary]==3.3.6        # PostgreSQL (primary)
+PyMySQL==1.2.3                # MySQL / MariaDB (supported)
+cryptography>=42              # required by PyMySQL for caching_sha2_password
+PyJWT==2.12.1
+argon2-cffi==25.1.0
+redis==8.1.0
+httpx==0.28.1
+python-multipart==0.0.26

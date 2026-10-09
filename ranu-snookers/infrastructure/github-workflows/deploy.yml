@@ -1,0 +1,64 @@
+# main → CI → images → migrate → deploy → health check → release.
+# Configure repository secrets: DEPLOY_HOST, DEPLOY_USER, DEPLOY_SSH_KEY, DEPLOY_PATH.
+name: Deploy
+on:
+  workflow_run:
+    workflows: [CI]
+    branches: [main]
+    types: [completed]
+
+concurrency: { group: production, cancel-in-progress: false }
+
+jobs:
+  guard-migrations:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    outputs: { destructive: "${{ steps.scan.outputs.destructive }}" }
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.event.workflow_run.head_sha }}", fetch-depth: 0 }
+      - id: scan
+        name: Detect destructive migrations (never auto-applied)
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 -- backend/migrations/versions || true)
+          if [ -n "$CHANGED" ] && grep -EinH "drop_table|drop_column|op\.execute\(.*(DROP|TRUNCATE|DELETE)" $CHANGED | grep -v "def downgrade" ; then
+            echo "destructive=true" >> "$GITHUB_OUTPUT"; else echo "destructive=false" >> "$GITHUB_OUTPUT"; fi
+
+  build:
+    needs: guard-migrations
+    runs-on: ubuntu-latest
+    permissions: { contents: read, packages: write }
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.event.workflow_run.head_sha }}" }
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: "${{ github.actor }}", password: "${{ secrets.GITHUB_TOKEN }}" }
+      - run: |
+          IMG=ghcr.io/${{ github.repository_owner }}/ranu
+          docker build -t $IMG-api:${{ github.sha }} -t $IMG-api:latest ./backend
+          docker build -t $IMG-web:${{ github.sha }} -t $IMG-web:latest ./frontend
+          docker push --all-tags $IMG-api && docker push --all-tags $IMG-web
+
+  deploy:
+    needs: [guard-migrations, build]
+    runs-on: ubuntu-latest
+    # Destructive migrations require a human approval on the "production-destructive" environment.
+    environment: ${{ needs.guard-migrations.outputs.destructive == 'true' && 'production-destructive' || 'production' }}
+    steps:
+      - name: Backup, migrate, roll out, health-check
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+            cd ${{ secrets.DEPLOY_PATH }}
+            git fetch --all && git checkout ${{ github.sha }}
+            docker compose exec -T db pg_dump -U ranu ranu | gzip > backups/pre-${{ github.sha }}.sql.gz
+            docker compose pull || true
+            docker compose build api worker web
+            docker compose run --rm migrate
+            docker compose up -d api worker web nginx
+            for i in $(seq 1 30); do curl -fs http://localhost/ready && exit 0; sleep 2; done
+            echo "Health check failed — rolling back app containers"; git checkout - && docker compose up -d --build api worker web; exit 1

@@ -1,0 +1,67 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_USER: ranu, POSTGRES_PASSWORD: ranu, POSTGRES_DB: ranu_test }
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U ranu" --health-interval 5s --health-retries 20
+      mysql:
+        image: mysql:8.4
+        env: { MYSQL_DATABASE: ranu_test, MYSQL_USER: ranu, MYSQL_PASSWORD: ranu, MYSQL_ROOT_PASSWORD: root }
+        ports: ["3306:3306"]
+        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 5s --health-retries 30
+    defaults: { run: { working-directory: backend } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip, cache-dependency-path: backend/requirements*.txt }
+      - run: pip install -r requirements-dev.txt
+      - name: Lint
+        run: ruff check app tests
+      - name: Unit + integration + API tests (SQLite)
+        run: pytest -q
+      - name: Tests on PostgreSQL (schema built by Alembic, incl. exclusion constraint + concurrency)
+        env: { TEST_DATABASE_URL: "postgresql+psycopg://ranu:ranu@localhost:5432/ranu_test", TEST_USE_MIGRATIONS: "1" }
+        run: pytest -q
+      - name: Tests on MySQL 8
+        env: { TEST_DATABASE_URL: "mysql+pymysql://ranu:ranu@127.0.0.1:3306/ranu_test?charset=utf8mb4" }
+        run: pytest -q
+      - name: Migrations are in sync with models
+        env: { DATABASE_URL: "postgresql+psycopg://ranu:ranu@localhost:5432/ranu_test" }
+        run: |
+          psql postgresql://ranu:ranu@localhost:5432/ranu_test -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
+          alembic upgrade head && alembic check && alembic downgrade base && alembic upgrade head
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: frontend } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npm run typecheck
+      - name: Tests
+        run: npm test
+      - name: Build
+        run: npm run build
+
+  docker:
+    needs: [backend, frontend]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - run: docker build -t ranu-api ./backend
+      - run: docker build -t ranu-web ./frontend

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d1330"/><stop offset=".55" stop-color="#1a1f5a"/><stop offset="1" stop-color="#2b1458"/></linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#4f7cff" stop-opacity=".55"/><stop offset="1" stop-color="#4f7cff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="shell" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe3ee"/></linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2d36"/><stop offset="1" stop-color="#0d0e12"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a6420"/><stop offset=".5" stop-color="#f3dc9a"/><stop offset="1" stop-color="#8a6420"/></linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g stroke="#7f9cff" stroke-opacity=".12" stroke-width="2" fill="none">
+    <circle cx="800" cy="470" r="140"/><circle cx="800" cy="470" r="230"/><circle cx="800" cy="470" r="320"/><circle cx="800" cy="470" r="410"/><circle cx="800" cy="470" r="500"/><circle cx="800" cy="470" r="590"/><circle cx="800" cy="470" r="680"/><circle cx="800" cy="470" r="770"/>
+  </g>
+  <ellipse cx="800" cy="500" rx="560" ry="300" fill="url(#glow)"/>
+  <g font-family="Arial, sans-serif" font-weight="700" font-size="62" fill="#9fb4ff" fill-opacity=".22">
+    <text x="190" y="230">△</text><text x="1330" y="250">○</text><text x="230" y="740">✕</text><text x="1310" y="720">□</text>
+  </g>
+  <!-- controller -->
+  <g transform="translate(800 520)">
+    <ellipse cx="0" cy="210" rx="420" ry="40" fill="#000" opacity=".45" filter="url(#blur)"/>
+    <path d="M-330 -60 C-300 -150 -170 -160 -110 -120 L110 -120 C170 -160 300 -150 330 -60 C380 70 400 190 330 215 C270 238 220 170 170 110 L-170 110 C-220 170 -270 238 -330 215 C-400 190 -380 70 -330 -60 Z" fill="url(#shell)"/>
+    <path d="M-150 -118 L150 -118 L130 40 C60 70 -60 70 -130 40 Z" fill="url(#core)"/>
+    <rect x="-95" y="-108" width="190" height="88" rx="16" fill="#1c1f27" stroke="#3a3f4c" stroke-width="2"/>
+    <path d="M-60 -116 L60 -116" stroke="#5b8cff" stroke-width="6" stroke-linecap="round" opacity=".9"/>
+    <circle cx="-95" cy="65" r="44" fill="#1a1c22"/><circle cx="-95" cy="65" r="30" fill="#2b2e37"/>
+    <circle cx="95" cy="65" r="44" fill="#1a1c22"/><circle cx="95" cy="65" r="30" fill="#2b2e37"/>
+    <g fill="#c9ccd6"><rect x="-262" y="-42" width="26" height="74" rx="6"/><rect x="-286" y="-18" width="74" height="26" rx="6"/></g>
+    <g fill="none" stroke="#9aa0ad" stroke-width="5">
+      <circle cx="250" cy="-50" r="16"/><circle cx="214" cy="-14" r="16"/><circle cx="286" cy="-14" r="16"/><circle cx="250" cy="22" r="16"/>
+    </g>
+    <circle cx="0" cy="88" r="11" fill="#0d0e12"/>
+  </g>
+  <rect x="0" y="890" width="1600" height="10" fill="url(#gold)" opacity=".85"/>
+</svg>

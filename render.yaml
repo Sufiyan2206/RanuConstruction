@@ -1,0 +1,30 @@
+# Render Blueprint for the RANU backend (FastAPI). The website itself is deployed on Vercel.
+# Database: any managed PostgreSQL (Neon, Render Postgres, Supabase) - paste its URL as DATABASE_URL.
+#
+# One process on purpose: the billing/booking-expiry worker runs inside the API
+# (RUN_EMBEDDED_WORKER) and live updates are in-memory, so do NOT scale past 1 instance
+# or add --workers without also setting up Redis (REDIS_URL).
+services:
+  - type: web
+    name: ranu-api
+    runtime: docker
+    region: singapore            # closest to India; pick the same region for the database
+    plan: starter                # free plans sleep after 15 min idle - that pauses billing and booking expiry
+    rootDir: ranu-snookers/backend
+    dockerfilePath: ./Dockerfile
+    # Migrations run on every start (safe: Alembic only applies what is missing).
+    dockerCommand: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips '*' --workers 1"
+    healthCheckPath: /health
+    envVars:
+      - { key: ENVIRONMENT, value: production }
+      - { key: COOKIE_SECURE, value: "true" }
+      - { key: RUN_EMBEDDED_WORKER, value: "true" }
+      - { key: JWT_SECRET, generateValue: true }
+      - { key: DATABASE_URL, sync: false }     # paste from Neon / Render Postgres
+      - { key: CORS_ORIGINS, sync: false }     # https://<your-site>.vercel.app (and your custom domain)
+      - { key: PUBLIC_BASE_URL, sync: false }  # https://<your-site>.vercel.app
+      # "mock" simulates payments (no real money). Switch to razorpay + keys before taking real deposits.
+      - { key: PAYMENT_PROVIDER, value: mock }
+      - { key: PAYMENT_KEY, sync: false }
+      - { key: PAYMENT_SECRET, sync: false }
+      - { key: PAYMENT_WEBHOOK_SECRET, sync: false }
