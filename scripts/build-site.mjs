@@ -12,9 +12,10 @@ run("npm run build");
 rmSync("dist", { recursive: true, force: true });
 mkdirSync("dist/snookers", { recursive: true });
 
-// Company site: everything at the repo root that is not app/tooling (index.html, any images you add later, ...).
-const SKIP = new Set(["ranu-snookers", "scripts", "dist", "node_modules", ".git", ".vercel", ".gitignore", "package.json", "package-lock.json", "vercel.json", "render.yaml", "README.md"]);
+// Company site: root files plus public assets copied to the web root.
+const SKIP = new Set(["ranu-snookers", "scripts", "dist", "node_modules", ".git", ".vercel", ".gitignore", "package.json", "package-lock.json", "vercel.json", "render.yaml", "README.md", "public"]);
 for (const name of readdirSync(".")) if (!SKIP.has(name)) cpSync(name, `dist/${name}`, { recursive: true });
+if (existsSync("public")) for (const name of readdirSync("public")) cpSync(`public/${name}`, `dist/${name}`, { recursive: true });
 
 cpSync(`${APP}/dist`, "dist/snookers", { recursive: true });
 console.log("site built -> dist/ (company page at /, app at /snookers/)");

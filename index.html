@@ -82,7 +82,7 @@ section.blk{padding-block:80px;border-top:1px solid var(--line)}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .card{border:1px solid var(--line);border-radius:14px;padding:26px;display:grid;gap:12px;align-content:start}
-.card svg{width:36px;height:36px;color:var(--red)}
+.card svg{width:36px;height:80px;color:var(--red)}
 .card h3{font-size:20px;font-weight:700}
 .card p{color:var(--muted);font-size:16px}
 @media (max-width:900px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -119,6 +119,7 @@ section.blk{padding-block:80px;border-top:1px solid var(--line)}
 @media (max-width:700px){.commit{grid-template-columns:minmax(0,1fr)}}
 
 .ph{aspect-ratio:4/3;max-width:100%;border-radius:12px;background:var(--surface);border:1px dashed var(--steel);display:grid;place-items:center;color:var(--muted);font-size:14px;font-weight:600;text-align:center;padding:12px}
+.project-video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;background:#000}
 .item{display:grid;gap:10px}
 .item h3{font-size:18px;font-weight:700}
 .item p{color:var(--muted);font-size:15px}
@@ -353,9 +354,9 @@ footer .wrap{display:grid;gap:28px}
     <div class="wrap">
       <div class="sec-head"><div class="eyebrow">Our work</div><h2>Recent projects</h2></div>
       <div class="grid3">
-        <article class="item"><div class="ph">[Project photo]</div><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
-        <article class="item"><div class="ph">[Project photo]</div><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
-        <article class="item"><div class="ph">[Project photo]</div><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+        <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Recent project video 1"><source src="public/videos/v1.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+        <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Recent project video 2"><source src="public/videos/v2.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+        <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Recent project video 3"><source src="public/videos/v3.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
       </div>
     </div>
   </section>
@@ -619,9 +620,9 @@ footer .wrap{display:grid;gap:28px}
       <div>
         <div class="sec-head" style="margin-bottom:28px"><div class="eyebrow">Reserve</div><h2>Book your table</h2><p>Reserve ahead on weekends and evenings, when tables fill up fastest.</p></div>
         <dl class="details">
-          <div><dt>Phone / WhatsApp</dt><dd>[BILLIARDS PHONE]</dd></div>
+          <div><dt>Phone / WhatsApp</dt><dd>+91 9515991350</dd></div>
           <div><dt>Instagram</dt><dd>[@YOUR_HANDLE]</dd></div>
-          <div><dt>Address</dt><dd>[CLUB ADDRESS]</dd></div>
+          <div><dt>Address</dt><dd></dd></div>
         </dl>
         <p style="margin-top:28px"><a class="btn btn-primary" data-snookers href="#billiards">Book online now &rarr;</a></p>
         <p class="note" style="margin-top:10px">Live table availability and instant booking on the Ranu Snookers app.</p>
@@ -656,7 +657,7 @@ footer .wrap{display:grid;gap:28px}
     </div>
     <div class="fine">
       <span>© 2026 Ranu Group</span>
-      <span>[GROUP PHONE] · [GROUP EMAIL]</span>
+      <span>+91 9515991350 · info@ranugroupindia.com</b></span>
     </div>
   </div>
 </footer>
