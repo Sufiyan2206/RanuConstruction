@@ -1,0 +1,31 @@
+{
+  "server_url": "https://club.ranusnookers.in",
+  "queue_path": "/var/lib/ranu/queue.db",
+  "heartbeat_seconds": 30,
+  "devices": [
+    {
+      "device_id": "TABLE4_SENSOR",
+      "api_key": "rdk_PASTE_KEY_SHOWN_AT_REGISTRATION",
+      "type": "MOTION_SENSOR",
+      "gpio_pin": 17,
+      "event": "ACTIVITY_DETECTED",
+      "idle_event": "NO_ACTIVITY",
+      "debounce_seconds": 10
+    },
+    {
+      "device_id": "TABLE4_PRESSURE",
+      "api_key": "rdk_PASTE_KEY_SHOWN_AT_REGISTRATION",
+      "type": "PRESSURE_SENSOR",
+      "gpio_pin": 27,
+      "event": "PRESSURE",
+      "debounce_seconds": 15
+    },
+    {
+      "device_id": "TABLE4_RFID",
+      "api_key": "rdk_PASTE_KEY_SHOWN_AT_REGISTRATION",
+      "type": "RFID_READER",
+      "reader": "keyboard",
+      "test_card_uid": "04A1B2C3"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+# RANU Club Management Platform — single-host deployment (VPS / OCI / AWS / Azure VM).
+#   cp .env.example .env   # edit secrets
+#   docker compose up -d --build
+#   docker compose run --rm migrate          # (first run and on every release)
+#   docker compose run --rm api python -m app.seed [--demo]
+name: ranu
+
+x-api-env: &api-env
+  env_file: .env
+  environment:
+    DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://ranu:${POSTGRES_PASSWORD}@db:5432/ranu}
+    REDIS_URL: redis://redis:6379/0
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ranu
+      POSTGRES_USER: ranu
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U ranu -d ranu"], interval: 5s, retries: 20 }
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes: [redisdata:/data]
+    healthcheck: { test: ["CMD", "redis-cli", "ping"], interval: 5s, retries: 20 }
+
+  migrate:
+    build: { context: ./backend, dockerfile: Dockerfile }
+    <<: *api-env
+    command: ["sh", "-c", "alembic upgrade head && python -m app.seed"]
+    depends_on: { db: { condition: service_healthy } }
+    profiles: ["tools"]
+
+  api:
+    build: { context: ./backend, dockerfile: Dockerfile }
+    <<: *api-env
+    restart: unless-stopped
+    depends_on: { db: { condition: service_healthy }, redis: { condition: service_healthy } }
+
+  worker:
+    build: { context: ./backend, dockerfile: Dockerfile }
+    <<: *api-env
+    restart: unless-stopped
+    command: ["python", "-m", "app.workers.scheduler"]
+    depends_on: { db: { condition: service_healthy }, redis: { condition: service_healthy } }
+
+  web:
+    build: { context: ./frontend, dockerfile: Dockerfile }
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports: ["${HTTP_PORT:-80}:80"]
+    volumes: ["./infrastructure/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro"]
+    depends_on: [api, web]
+
+volumes:
+  pgdata:
+  redisdata:

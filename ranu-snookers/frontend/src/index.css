@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* RANU design tokens — "members' club by day": white & ivory, champagne gold, charcoal ink.
+   Green felt is reserved for the tables themselves. */
+@theme {
+  --color-felt-950: #17140f;   /* charcoal: text on gold, dark chips */
+  --color-felt-900: #1f1b15;
+  --color-felt-800: #2a251d;
+  --color-felt-700: #0f5132;
+  --color-felt-600: #146c3a;   /* table felt */
+  --color-felt-500: #1c8a4b;
+  --color-felt-400: #34b36a;
+  --color-brass-50: #fdf9ef;
+  --color-brass-100: #f7eed8;
+  --color-brass-200: #ecdcb0;
+  --color-brass-500: #c9a24b;  /* gold fill */
+  --color-brass-400: #a07a2c;  /* gold text / hover — readable on white */
+  --color-brass-600: #7d5e1f;
+  --color-ink-50: #17140f;     /* primary text */
+  --color-ink-100: #2c2822;
+  --color-ink-300: #58534b;
+  --color-ink-400: #7b756b;
+  --color-ink-500: #a8a196;
+  --color-surface: #ffffff;
+  --color-surface-2: #faf7f1;  /* ivory panels, table heads */
+  --color-line: #ebe4d6;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --shadow-card: 0 1px 2px rgb(23 20 15 / 0.04), 0 8px 24px -12px rgb(23 20 15 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(23 20 15 / 0.05), 0 18px 40px -16px rgb(23 20 15 / 0.22);
+}
+
+html, body, #root { height: 100%; }
+body {
+  background: #ffffff;
+  color: var(--color-ink-50);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+:focus-visible { outline: 2px solid var(--color-brass-500); outline-offset: 2px; }
+::selection { background: var(--color-brass-200); }
+
+.num { font-variant-numeric: tabular-nums; }
+.font-display { font-family: var(--font-display); }
+
+/* Page backdrop: white with a soft champagne glow at the top. */
+.felt-bg {
+  background:
+    radial-gradient(1100px 520px at 85% -12%, rgba(201, 162, 75, 0.13), transparent 60%),
+    radial-gradient(800px 420px at -10% 0%, rgba(201, 162, 75, 0.07), transparent 60%),
+    #ffffff;
+}
+/* Small gold label above section headings. */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--color-brass-400);
+}
+.eyebrow::before { content: ""; width: 1.75rem; height: 1px; background: currentColor; }
+.gold-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--color-brass-500), transparent); }
+.text-gold-gradient {
+  background: linear-gradient(100deg, #8a6420 0%, #c9a24b 45%, #a07a2c 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Table artwork / photos: layered so a real photo (if present) covers the illustration. */
+.table-art { background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+/* ------------------------------------------------------------------ 3D slow-motion table scene */
+@property --orbit { syntax: "<angle>"; inherits: true; initial-value: -14deg; }
+.scene3d { perspective: 1500px; perspective-origin: 50% 0%; }
+.table3d {
+  position: relative; transform-style: preserve-3d;
+  transform: rotateX(56deg) rotateZ(var(--orbit));
+  animation: orbit 26s ease-in-out infinite alternate;
+}
+@keyframes orbit { from { --orbit: -16deg; } to { --orbit: -6deg; } }
+.table3d-felt { position: absolute; inset: 0; border-radius: 3.2% / 5.5%; background: url(/tables/snooker-empty.svg) center / 100% 100% no-repeat; }
+.table3d-side { position: absolute; background: linear-gradient(180deg, #6b3619, #3b1c0b); }
+.table3d-shadow {
+  position: absolute; inset: 4% 2%; border-radius: 6%;
+  background: rgb(23 20 15 / 0.5); filter: blur(28px); transform: translateZ(-90px);
+}
+.ball3d { position: absolute; transform: translate(-50%, -50%); transform-style: preserve-3d; aspect-ratio: 1; }
+.ball3d-shadow { position: absolute; inset: 8% -10% -25% 10%; border-radius: 50%; background: rgb(0 0 0 / 0.45); filter: blur(3px); }
+.ball3d-sphere {
+  position: absolute; inset: 0; border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, #fff 0, rgb(255 255 255 / 0.55) 9%, transparent 34%),
+    radial-gradient(circle at 50% 50%, transparent 52%, rgb(0 0 0 / 0.38) 100%),
+    var(--c);
+  transform: translateZ(calc(var(--u) * 1.4)) rotateZ(calc(-1 * var(--orbit))) rotateX(-56deg);
+  box-shadow: inset -2px -3px 6px rgb(0 0 0 / 0.25);
+}
+/* Break shot loop — deliberately slow (12s) for a slow-motion feel. */
+.cue3d { animation: cue-strike 12s infinite; transform-origin: 100% 50%; }
+@keyframes cue-strike {
+  0% { opacity: 0; translate: 0 0; }
+  5% { opacity: 1; translate: 0 0; }
+  15% { translate: -9% 0; animation-timing-function: cubic-bezier(.7, 0, .9, .4); }
+  18% { opacity: 1; translate: 3% 0; }
+  26%, 100% { opacity: 0; translate: 3% 0; }
+}
+.cueball3d { animation: cueball-roll 12s infinite; }
+@keyframes cueball-roll {
+  0%, 18% { left: var(--x0); top: var(--y0); opacity: 1; animation-timing-function: cubic-bezier(.25, .6, .35, 1); }
+  40% { left: var(--xh); top: var(--yh); animation-timing-function: cubic-bezier(.05, .7, .2, 1); }
+  72%, 88% { left: var(--x1); top: var(--y1); opacity: 1; }
+  93% { left: var(--x1); top: var(--y1); opacity: 0; }
+  97% { left: var(--x0); top: var(--y0); opacity: 0; }
+  100% { left: var(--x0); top: var(--y0); opacity: 1; }
+}
+.red3d { animation: red-break 12s infinite; }
+@keyframes red-break {
+  0%, 40% { left: var(--x0); top: var(--y0); opacity: 1; animation-timing-function: cubic-bezier(.08, .75, .2, 1); }
+  76%, 88% { left: var(--x1); top: var(--y1); opacity: 1; }
+  93% { left: var(--x1); top: var(--y1); opacity: 0; }
+  97% { left: var(--x0); top: var(--y0); opacity: 0; }
+  100% { left: var(--x0); top: var(--y0); opacity: 1; }
+}
+.impact3d { animation: impact 12s infinite; opacity: 0; }
+@keyframes impact {
+  0%, 39% { opacity: 0; scale: 0.2; }
+  41% { opacity: 0.9; scale: 1; }
+  60%, 100% { opacity: 0; scale: 3.2; }
+}
+/* Hanging lamp gently swaying above the table */
+.lamp-sway { transform-origin: 50% 0; animation: sway 9s ease-in-out infinite alternate; }
+@keyframes sway { from { rotate: -1.6deg; } to { rotate: 1.6deg; } }
+.light-pulse { animation: light-pulse 6s ease-in-out infinite alternate; }
+@keyframes light-pulse { from { opacity: 0.75; } to { opacity: 1; } }
+
+/* Slow scroll reveal + 3D tilt cards */
+.reveal { opacity: 0; transform: translateY(36px) scale(0.98); transition: opacity 1.1s cubic-bezier(.16, 1, .3, 1), transform 1.1s cubic-bezier(.16, 1, .3, 1); }
+.reveal.in { opacity: 1; transform: none; }
+.tilt { transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(.16, 1, .3, 1), box-shadow 0.7s cubic-bezier(.16, 1, .3, 1); will-change: transform; }
+.tilt-glare { pointer-events: none; position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity 0.7s;
+  background: radial-gradient(500px circle at var(--gx, 50%) var(--gy, 50%), rgb(255 255 255 / 0.35), transparent 45%); }
+.tilt:hover .tilt-glare { opacity: 1; }
+.fade-up { animation: fade-up 1.4s cubic-bezier(.16, 1, .3, 1) both; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(24px); } }
+
+/* Printable receipts: only the receipt is printed. */
+@media print {
+  body { background: #fff; color: #000; }
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area { position: absolute; inset: 0; width: 80mm; padding: 4mm; color: #000; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
