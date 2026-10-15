@@ -120,6 +120,9 @@ section.blk{padding-block:80px;border-top:1px solid var(--line)}
 
 .ph{aspect-ratio:4/3;max-width:100%;border-radius:12px;background:var(--surface);border:1px dashed var(--steel);display:grid;place-items:center;color:var(--muted);font-size:14px;font-weight:600;text-align:center;padding:12px}
 .project-video{display:block;width:100%;aspect-ratio:2/4;object-fit:cover;border-radius:12px;background:#000}
+.project-category{display:grid;gap:18px}
+.project-category + .project-category{margin-top:40px}
+.project-category h3{font-size:24px;font-weight:700}
 .item{display:grid;gap:10px}
 .item h3{font-size:18px;font-weight:700}
 .item p{color:var(--muted);font-size:15px}
@@ -352,11 +355,21 @@ footer .wrap{display:grid;gap:28px}
 
   <section class="blk">
     <div class="wrap">
-      <div class="sec-head"><div class="eyebrow">Our work</div><h2>Recent projects</h2></div>
-      <div class="grid3">
-        <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Recent project video 1"><source src="/videos/v1.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
-        <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Recent project video 2"><source src="/videos/v2.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
-        <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Recent project video 3"><source src="/videos/v3.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+      <div class="sec-head"><div class="eyebrow">Our work</div><h2>Projects</h2></div>
+      <div class="project-category">
+        <h3>Upcoming Projects</h3>
+        <div class="grid3">
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Upcoming project video"><source src="/videos/v1.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+        </div>
+      </div>
+      <div class="project-category">
+        <h3>Completed Projects</h3>
+        <div class="grid3">
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 1"><source src="/videos/v2.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 2"><source src="/videos/v3.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 3"><source src="/videos/v4.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 4"><source src="/videos/v5.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>[Project name]</h3><p>[Type] · [Location] · [Year]</p></article>
+        </div>
       </div>
     </div>
   </section>
