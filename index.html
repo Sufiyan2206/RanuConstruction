@@ -476,7 +476,7 @@ footer .wrap{display:grid;gap:28px}
           <div><dt>Studio</dt><dd>16-1-27/A/1, Amin Road, Bank Colony, Saidabad, Hyderabad, Telangana 500059.</dd></div>
         </dl>
       </div>
-      <form class="enq" data-form novalidate>
+      <form class="enq" data-form data-email-inquiry novalidate>
         <div class="row2">
           <label for="i-name">Your name<input id="i-name" name="name" required autocomplete="name"></label>
           <label for="i-phone">Phone number<input id="i-phone" name="phone" type="tel" required autocomplete="tel"></label>
@@ -487,8 +487,8 @@ footer .wrap{display:grid;gap:28px}
         </div>
         <label for="i-msg">Anything else<textarea id="i-msg" name="msg" placeholder="Location, possession date, style you like…"></textarea></label>
         <button class="btn btn-primary" type="submit">Request a consultation</button>
-        <p class="note">This preview form is not connected yet.</p>
-        <p class="ok" hidden></p>
+        <p class="note">Your details will be sent securely to our team.</p>
+        <p class="ok" role="status" aria-live="polite" hidden></p>
       </form>
     </div>
   </section>
@@ -715,6 +715,10 @@ footer .wrap{display:grid;gap:28px}
   document.querySelectorAll('form[data-form]').forEach(function (f) {
     f.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (f.hasAttribute('data-email-inquiry')) {
+        sendInteriorsInquiry(f);
+        return;
+      }
       var name = (f.querySelector('[name="name"]').value || '').trim();
       var phone = (f.querySelector('[name="phone"]').value || '').trim();
       var ok = f.querySelector('.ok');
@@ -724,6 +728,38 @@ footer .wrap{display:grid;gap:28px}
       ok.hidden = false;
     });
   });
+
+  async function sendInteriorsInquiry(form) {
+    var button = form.querySelector('button[type="submit"]');
+    var status = form.querySelector('.ok');
+    var formData = new FormData(form);
+    var name = String(formData.get('name') || '').trim();
+    button.disabled = true;
+    status.textContent = 'Sending your request…';
+    status.hidden = false;
+
+    try {
+      var response = await fetch('/api/v1/public/inquiries/interiors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          phone: String(formData.get('phone') || '').trim(),
+          property_type: String(formData.get('type') || '').trim(),
+          scope: String(formData.get('scope') || '').trim(),
+          message: String(formData.get('msg') || '').trim()
+        })
+      });
+      if (!response.ok) throw new Error('Request failed with status ' + response.status);
+      status.textContent = 'Thanks, ' + name + '. Your consultation request was sent. We will be in touch.';
+      form.reset();
+    } catch (error) {
+      console.error('Unable to send interiors consultation request:', error);
+      status.textContent = 'We could not send your request. Please try again or call us.';
+    } finally {
+      button.disabled = false;
+    }
+  }
 })();
 </script>
 

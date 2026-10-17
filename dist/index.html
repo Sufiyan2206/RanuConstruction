@@ -82,7 +82,7 @@ section.blk{padding-block:80px;border-top:1px solid var(--line)}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .card{border:1px solid var(--line);border-radius:14px;padding:26px;display:grid;gap:12px;align-content:start}
-.card svg{width:36px;height:36px;color:var(--red)}
+.card svg{width:36px;height:80px;color:var(--red)}
 .card h3{font-size:20px;font-weight:700}
 .card p{color:var(--muted);font-size:16px}
 @media (max-width:900px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -119,14 +119,10 @@ section.blk{padding-block:80px;border-top:1px solid var(--line)}
 @media (max-width:700px){.commit{grid-template-columns:minmax(0,1fr)}}
 
 .ph{aspect-ratio:4/3;max-width:100%;border-radius:12px;background:var(--surface);border:1px dashed var(--steel);display:grid;place-items:center;color:var(--muted);font-size:14px;font-weight:600;text-align:center;padding:12px}
-.project-video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;background:#000}
+.project-video{display:block;width:100%;aspect-ratio:2/4;object-fit:cover;border-radius:12px;background:#000}
 .project-category{display:grid;gap:18px}
 .project-category + .project-category{margin-top:40px}
 .project-category h3{font-size:24px;font-weight:700}
-.project-category .project-upcoming-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.project-category .project-upcoming-grid>.item{grid-column:2}
-.project-category .project-completed-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-@media (max-width:560px){.project-category .project-upcoming-grid,.project-category .project-completed-grid{grid-template-columns:minmax(0,1fr)}.project-category .project-upcoming-grid>.item{grid-column:1}}
 .item{display:grid;gap:10px}
 .item h3{font-size:18px;font-weight:700}
 .item p{color:var(--muted);font-size:15px}
@@ -268,7 +264,7 @@ footer .wrap{display:grid;gap:28px}
         <p>For a specific business, contact that division directly from its page.</p>
       </div>
       <dl class="details grid2">
-        <div><dt>Group office</dt><dd> 16-1-27/A/1, Amin Road, Bank Colony, Saidabad, Hyderabad, Telangana 500059 </dd></div>
+        <div><dt>Group office</dt><dd> 16-1-27/A/1, Amin Road, Bank Colony, E, Jaya Nagar, Saidabad, Hyderabad, Telangana 500059 </dd></div>
         <div><dt>Phone</dt><dd> +91 9515991350 </dd></div>
         <div><dt>Email</dt><dd>info@ranugroupindia.com</dd></div>
         <div><dt>Hours</dt><dd> Mon–Sat, 10:00:AM – 8:00:PM</dd></div>
@@ -362,17 +358,17 @@ footer .wrap{display:grid;gap:28px}
       <div class="sec-head"><div class="eyebrow">Our work</div><h2>Projects</h2></div>
       <div class="project-category">
         <h3>Upcoming Projects</h3>
-        <div class="grid3 project-upcoming-grid">
-          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Upcoming project video"><source src="/videos/v1.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>Sri Raghavendra Residency</h3><p>Hyderabad</p></article> 
+        <div class="grid3">
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Upcoming project video"><source src="/videos/v1.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>Sri Raghavendra Residency</h3><p>Hyderabad, Telangana</p></article>
         </div>
       </div>
       <div class="project-category">
         <h3>Completed Projects</h3>
-        <div class="grid3 project-completed-grid">
-          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 1"><source src="/videos/v2.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>S.B Enclave</h3><p>Hyderabad</p></article>
-          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 2"><source src="/videos/v3.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>SRT Colony</h3><p>Hyderabad</p></article>
-          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 3"><source src="/videos/v4.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>Zehra Mension</h3><p>Hyderabad</p></article>
-          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 4"><source src="/videos/v5.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>Errakunta</h3><p>Hyderabad</p></article>
+        <div class="grid3">
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 1"><source src="/videos/v2.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>S.B Enclave</h3><p>Hyderabad, Telangana</p></article>
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 2"><source src="/videos/v3.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>SRT Colony</h3><p>Hyderabad, Telangana</p></article>
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 3"><source src="/videos/v4.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>Zehra Mansion</h3><p>Hyderabad, Telangana</p></article>
+          <article class="item"><video class="project-video" controls preload="metadata" playsinline aria-label="Completed project video 4"><source src="/videos/v5.mp4" type="video/mp4">Your browser does not support video playback.</video><h3>Modern Homes</h3><p>Hyderabad, Telangana</p></article>
         </div>
       </div>
     </div>
@@ -384,8 +380,8 @@ footer .wrap{display:grid;gap:28px}
         <div class="sec-head" style="margin-bottom:28px"><div class="eyebrow">Get in touch</div><h2>Tell us about your plot</h2><p>Share a few details and we will call you back to plan a site visit.</p></div>
         <dl class="details">
           <div><dt>Phone / WhatsApp</dt><dd> +91 9515991350 </dd></div>
-          <div><dt>Email</dt><dd> info@ranugroupindia.com</dd></div>
-          <div><dt>Office</dt><dd>16-1-27/A/1, Amin Road, Bank Colony,  Saidabad, Hyderabad, Telangana 500059</dd></div>
+          <div><dt>Email</dt><dd> info@ranuindiagroup.com</dd></div>
+          <div><dt>Office</dt><dd>16-1-27/A/1, Amin Road, Bank Colony, Saidabad, Hyderabad, Telangana 500059</dd></div>
         </dl>
       </div>
       <form class="enq" data-form novalidate>
@@ -477,10 +473,10 @@ footer .wrap{display:grid;gap:28px}
         <dl class="details">
           <div><dt>Phone / WhatsApp</dt><dd>+91 9515991350</dd></div>
           <div><dt>Email</dt><dd>info@ranugroupindia.com </dd></div>
-          <div><dt>Studio</dt><dd>16-1-27/A/1, Amin Road, Bank Colony, Saidabad, Hyderabad, Telangana 500059</dd></div>
+          <div><dt>Studio</dt><dd>16-1-27/A/1, Amin Road, Bank Colony, Saidabad, Hyderabad, Telangana 500059.</dd></div>
         </dl>
       </div>
-      <form class="enq" data-form novalidate>
+      <form class="enq" data-form data-email-inquiry novalidate>
         <div class="row2">
           <label for="i-name">Your name<input id="i-name" name="name" required autocomplete="name"></label>
           <label for="i-phone">Phone number<input id="i-phone" name="phone" type="tel" required autocomplete="tel"></label>
@@ -491,8 +487,8 @@ footer .wrap{display:grid;gap:28px}
         </div>
         <label for="i-msg">Anything else<textarea id="i-msg" name="msg" placeholder="Location, possession date, style you like…"></textarea></label>
         <button class="btn btn-primary" type="submit">Request a consultation</button>
-        <p class="note">This preview form is not connected yet.</p>
-        <p class="ok" hidden></p>
+        <p class="note">Your details will be sent securely to our team.</p>
+        <p class="ok" role="status" aria-live="polite" hidden></p>
       </form>
     </div>
   </section>
@@ -719,6 +715,10 @@ footer .wrap{display:grid;gap:28px}
   document.querySelectorAll('form[data-form]').forEach(function (f) {
     f.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (f.hasAttribute('data-email-inquiry')) {
+        sendInteriorsInquiry(f);
+        return;
+      }
       var name = (f.querySelector('[name="name"]').value || '').trim();
       var phone = (f.querySelector('[name="phone"]').value || '').trim();
       var ok = f.querySelector('.ok');
@@ -728,6 +728,38 @@ footer .wrap{display:grid;gap:28px}
       ok.hidden = false;
     });
   });
+
+  async function sendInteriorsInquiry(form) {
+    var button = form.querySelector('button[type="submit"]');
+    var status = form.querySelector('.ok');
+    var formData = new FormData(form);
+    var name = String(formData.get('name') || '').trim();
+    button.disabled = true;
+    status.textContent = 'Sending your request…';
+    status.hidden = false;
+
+    try {
+      var response = await fetch('/api/v1/public/inquiries/interiors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          phone: String(formData.get('phone') || '').trim(),
+          property_type: String(formData.get('type') || '').trim(),
+          scope: String(formData.get('scope') || '').trim(),
+          message: String(formData.get('msg') || '').trim()
+        })
+      });
+      if (!response.ok) throw new Error('Request failed with status ' + response.status);
+      status.textContent = 'Thanks, ' + name + '. Your consultation request was sent. We will be in touch.';
+      form.reset();
+    } catch (error) {
+      console.error('Unable to send interiors consultation request:', error);
+      status.textContent = 'We could not send your request. Please try again or call us.';
+    } finally {
+      button.disabled = false;
+    }
+  }
 })();
 </script>
 

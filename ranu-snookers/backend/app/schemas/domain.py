@@ -6,7 +6,7 @@ from datetime import date, datetime
 from decimal import Decimal
 from typing import Any, Literal
 
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
 from app.models.enums import (
     BookingSource,
@@ -434,6 +434,16 @@ class RescheduleIn(BaseModel):
 class GuestLookupIn(BaseModel):
     reference: str
     phone: str
+
+
+class InteriorsInquiryIn(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
+
+    name: str = Field(min_length=1, max_length=120)
+    phone: str = Field(min_length=8, max_length=20)
+    property_type: str = Field(min_length=1, max_length=80)
+    scope: str = Field(min_length=1, max_length=100)
+    message: str = Field(default="", max_length=3000)
 
 
 # ============================================================================ sessions & billing

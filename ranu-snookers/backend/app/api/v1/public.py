@@ -7,16 +7,18 @@ from __future__ import annotations
 import uuid
 from datetime import date, datetime
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.api.v1.serializers import booking_out, quote_out
+from app.core.config import settings
 from app.core.database import get_db
 from app.core.deps import Principal, get_optional_principal
 from app.core.errors import NotFound
 from app.core.ratelimit import rate_limit
 from app.models import Organization
+from app.notifications.providers import get_channel_provider
 from app.schemas.domain import (
     AvailabilityOut,
     BookingOut,
@@ -25,6 +27,7 @@ from app.schemas.domain import (
     GameTypeOut,
     GuestLookupIn,
     HoldIn,
+    InteriorsInquiryIn,
     PlanOut,
     PublicTableOut,
     QrStartIn,
@@ -100,6 +103,27 @@ def hold(body: HoldIn, db: Session = Depends(get_db), p: Principal | None = Depe
 @router.post("/bookings/lookup", response_model=BookingOut)
 def lookup(body: GuestLookupIn, db: Session = Depends(get_db)):
     return booking_out(booking_service.lookup_public(db, body.reference, body.phone))
+
+
+@router.post("/inquiries/interiors", status_code=202, dependencies=[Depends(rate_limit("interiors_inquiry", 5))])
+def interiors_inquiry(body: InteriorsInquiryIn):
+    if settings.EMAIL_PROVIDER != "smtp" or not settings.SMTP_HOST:
+        raise HTTPException(status_code=503, detail="Email delivery is not configured.")
+
+    message = (
+        "New interiors consultation request\n\n"
+        f"Name: {body.name}\n"
+        f"Phone: {body.phone}\n"
+        f"Property: {body.property_type}\n"
+        f"Scope: {body.scope}\n"
+        f"Additional details: {body.message or 'Not provided'}"
+    )
+    get_channel_provider("EMAIL").send(
+        "info@ranugroupindia.com",
+        "New interiors consultation request",
+        message,
+    )
+    return {"message": "Your consultation request has been sent."}
 
 
 @router.post("/payments/mock/{order_id}/complete")
