@@ -31,8 +31,10 @@ class SmtpEmailProvider:
         msg = EmailMessage()
         msg["From"], msg["To"], msg["Subject"] = settings.SMTP_FROM, recipient, subject or settings.APP_NAME
         msg.set_content(body)
-        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=15) as s:
-            s.starttls()
+        smtp_client = smtplib.SMTP_SSL if settings.SMTP_USE_SSL else smtplib.SMTP
+        with smtp_client(settings.SMTP_HOST, settings.SMTP_PORT, timeout=15) as s:
+            if not settings.SMTP_USE_SSL:
+                s.starttls()
             if settings.SMTP_USER:
                 s.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
             s.send_message(msg)

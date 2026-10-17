@@ -61,6 +61,7 @@ class Settings(BaseSettings):
     EMAIL_PROVIDER: str = "console"  # console | smtp
     SMTP_HOST: str = ""
     SMTP_PORT: int = 587
+    SMTP_USE_SSL: bool = False
     SMTP_USER: str = ""
     SMTP_PASSWORD: str = ""
     SMTP_FROM: str = "no-reply@ranusnookers.local"
